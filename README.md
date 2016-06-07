@@ -23,3 +23,7 @@ the bootstrap providers of the app include ngrx/store so you can inject Store to
 the skeleton for the reducer is in shared/ticker.reducer.ts - write your own action and switch cases to handle them.
 
 the app index.html includes a link to bootstrap 3.6 css so feel free to use thier classes to make is look reasonably nice, but don't spend too much time on that!.
+
+## solution
+
+Is found in the solution branch (but don't cheat!)
