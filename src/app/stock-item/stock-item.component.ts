@@ -1,4 +1,4 @@
-import {OnDestroy, Input, Component, OnInit} from '@angular/core';
+import {OnChanges, Input, Component, OnInit} from '@angular/core';
 import {StocksService} from "../shared/stocks.service";
 import 'rxjs/add/observable/timer';
 import 'rxjs/add/operator/filter';
@@ -22,9 +22,9 @@ import {TickerState} from "../shared/ticker.reducer";
   <div class="col-xs-1"><button class="btn btn-small btn-danger" tooltip="Remove from watched" (click)="removeFromWatch()">-</button></div>
   <div class="col-xs-2 symbol">{{item.Symbol}}</div>
   <div class="col-xs-3 companyName">{{item.Name}}</div>
-  <stock-item-render (remove)="removeFromWatch()" [stock]="stockData$ |async"></stock-item-render>`
+  <stock-item-render [stock]="stockData$ |async"></stock-item-render>`
 })
-export class StockItemComponent implements OnInit {
+export class StockItemComponent implements OnInit,OnChanges {
   @Input()
   private item:lookupItem;
   @Input()
@@ -38,10 +38,20 @@ export class StockItemComponent implements OnInit {
     this.store.dispatch({type: REMOVE_FROM_WATCH, payload: this.item})
   }
 
-  ngOnInit() {
+  ngOnChanges(change) {
+    if (change.interval) {
+      this.createObservable();
+    }
+  }
+
+  private createObservable() {
     this.stockData$ = Observable.timer(0, this.interval)
       .switchMap(() => this.stocksService.qoute(this.item.Symbol))
       .distinctUntilChanged();
+  }
+
+  ngOnInit() {
+    this.createObservable();
   }
 
 }

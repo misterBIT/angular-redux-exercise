@@ -8,7 +8,7 @@ import {TickerState} from "../shared/ticker.reducer";
   selector: 'my-watched-counter',
   template: `<div *ngIf="watchNumber$|async">
 <h4>Currently watching {{watchNumber$|async}} stocks</h4>
-<label>Update every <input type="number" [value]="interval$|async" (keyup)="updateInterval($event.currentTarget.value)"/> seconds</label>
+<label>Update every <input type="number" [value]="interval$|async" (keyup)="updateInterval($event.currentTarget.value*1000)"/> seconds</label>
 </div>`
 })
 export class WatchedCounterComponent {
@@ -16,7 +16,7 @@ export class WatchedCounterComponent {
   watchNumber$:Observable<number>;
 
   constructor(private store:Store<TickerState>) {
-    this.interval$ = this.store.select(tickerState=>tickerState.interval);
+    this.interval$ = this.store.select(tickerState=>tickerState.interval).map(v=>v / 1000);
     this.watchNumber$ = this.store.select(tickerState=>tickerState.watchList)
       .map(list=>list.length);
   }
