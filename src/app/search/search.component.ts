@@ -9,15 +9,14 @@ import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/map';
 import {Observable} from "rxjs/Observable";
 import {ADD_TO_WATCH} from "../shared/ticker.actions";
-import {lookupItem} from "../watched/lookup-item.model";
+import {LookupItem} from "../watched/lookup-item.model";
 
 @Component({
-  moduleId   : module.id,
   selector   : 'search-component',
   templateUrl: 'search.component.html',
 })
 export class SearchComponent implements AfterViewInit {
-  results$:Observable<lookupItem>;
+  results$:Observable<LookupItem>;
   private inputObservable:Observable<Event>;
   @ViewChild('searchInput')
   private input;
@@ -33,7 +32,7 @@ export class SearchComponent implements AfterViewInit {
     this.results$ = this.inputObservable
       .debounceTime(400)
       .distinctUntilChanged()
-      .switchMap((v) => this.stocksService.lookup(v.target['value']))
+      .switchMap((v) => this.stocksService.lookup(v.target['value']));
   }
 
   addToWatch(item) {

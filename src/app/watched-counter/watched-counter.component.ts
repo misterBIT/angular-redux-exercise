@@ -4,26 +4,25 @@ import {Observable} from "rxjs/Observable";
 import {CHANGE_INTERVAL} from "../shared/ticker.actions";
 import {TickerState} from "../shared/ticker.reducer";
 @Component({
-  moduleId: module.id,
-  selector: 'my-watched-counter',
-  template: `<div *ngIf="watchNumber$|async">
+	selector: 'my-watched-counter',
+	template: `<div *ngIf="watchNumber$|async">
 <h4>Currently watching {{watchNumber$|async}} stocks</h4>
 <label>Update every <input type="number" [value]="interval$|async" (keyup)="updateInterval($event.currentTarget.value*1000)"/> seconds</label>
 </div>`
 })
 export class WatchedCounterComponent {
-  interval$:Observable<number>;
-  watchNumber$:Observable<number>;
+	interval$: Observable<number>;
+	watchNumber$: Observable<number>;
 
-  constructor(private store:Store<TickerState>) {
-    this.interval$ = this.store.select(tickerState=>tickerState.interval).map(v=>v / 1000);
-    this.watchNumber$ = this.store.select(tickerState=>tickerState.watchList)
-      .map(list=>list.length);
-  }
+	constructor(private store: Store<TickerState>) {
+		this.interval$ = this.store.select(tickerState=>tickerState.interval).map(v=>v / 1000);
+		this.watchNumber$ = this.store.select(tickerState=>tickerState.watchList)
+			.map(list=>list.length);
+	}
 
-  updateInterval(newValue) {
-    this.store.dispatch({type: CHANGE_INTERVAL, payload: newValue});
+	updateInterval(newValue) {
+		this.store.dispatch({type: CHANGE_INTERVAL, payload: newValue});
 
-  }
+	}
 
 }
