@@ -1,11 +1,8 @@
 import {Component} from '@angular/core';
-import {StocksService} from "./shared/stocks.service";
 
 @Component({
-  moduleId : module.id,
-  selector : 'ticker-app',
-  providers: [StocksService],
-  template : `<div class="container">
+	selector: 'ticker-app',
+	template: `<div class="container">
     <div class="jumbotron"> <h1>TickerApp</h1></div>
     <search-component></search-component>
     <my-watched-components></my-watched-components>
@@ -13,6 +10,6 @@ import {StocksService} from "./shared/stocks.service";
 </div>`
 })
 export class TickerApp {
-  constructor() {
-  }
+	constructor() {
+	}
 }
