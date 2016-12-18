@@ -10,29 +10,27 @@ import 'rxjs/add/operator/map';
 import {Observable} from "rxjs/Observable";
 import {ADD_TO_WATCH} from "../shared/ticker.actions";
 import {LookupItem} from "../watched/lookup-item.model";
-
+import {FormControl} from "@angular/forms";
+import 'rxjs/add/observable/of';
 @Component({
-  selector   : 'search-component',
-  templateUrl: 'search.component.html',
+  selector: 'search-component',
+  templateUrl: './search.component.html',
 })
 export class SearchComponent implements AfterViewInit {
-  results$:Observable<LookupItem>;
-  private inputObservable:Observable<Event>;
+  results$: Observable<LookupItem>;
   @ViewChild('searchInput')
-  private input;
+  private input: FormControl;
 
-  constructor(private stocksService:StocksService, private store:Store<any>) {
+  constructor(private stocksService: StocksService, private store: Store<any>) {
 
   }
 
   ngAfterViewInit() {
-    // there are many other ways to get input observable - create a subject and next to it on keyup event,
-    // instantiate a Control use ngControl directive and use the valueChanges Observable, etc.
-    this.inputObservable = Observable.fromEvent(this.input.nativeElement, 'keyup'); //
-    this.results$ = this.inputObservable
+    this.results$ = this.input.valueChanges
+      .filter(v => v.length > 2)
       .debounceTime(400)
       .distinctUntilChanged()
-      .switchMap((v) => this.stocksService.lookup(v.target['value']));
+      .switchMap((v) => this.stocksService.lookup(v));
   }
 
   addToWatch(item) {

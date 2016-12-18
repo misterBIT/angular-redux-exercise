@@ -4,7 +4,7 @@ import {TickerState} from "../shared/ticker.reducer";
 import {Store} from '@ngrx/store';
 @Component({
 	selector: 'my-watched-component',
-	templateUrl: 'watched.component.html',
+	templateUrl: './watched.component.html',
 })
 export class WatchedComponent implements OnInit {
 	watchList$: Observable<any[]>;
