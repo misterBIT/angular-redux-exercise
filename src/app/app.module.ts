@@ -14,5 +14,5 @@ import {StocksService} from "./shared/stocks.service";
 	imports: [BrowserModule, StoreModule.provideStore(tickerReducer), JsonpModule],
 	bootstrap: [TickerApp]
 })
-export class TickerModule {
+export class AppModule {
 }
