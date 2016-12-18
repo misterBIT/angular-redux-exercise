@@ -5,12 +5,4 @@
     </label>
   </div>
 </div>
-<div class="row">
-  <ul class="unstyled">
-    <li class="stockItem" *ngFor="let item of results$ |async">
-      <span>{{item.Symbol}}</span>
-      <span>{{item.Name}}</span>
-      <button class="btn btn-danger" (click)="addToWatch(item)"> Add to Watch</button>
-    </li>
-  </ul>
-</div>
+<search-results (addToWatch)=addToWatch($event) (removeFromWatch)="removeFromWatch($event)" [searchResults]="results$|async" [watchlist]="watchList$|async"></search-results>

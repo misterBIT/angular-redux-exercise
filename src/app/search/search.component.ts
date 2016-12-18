@@ -8,7 +8,7 @@ import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/map';
 import {Observable} from "rxjs/Observable";
-import {ADD_TO_WATCH} from "../shared/ticker.actions";
+import {ADD_TO_WATCH, REMOVE_FROM_WATCH} from "../shared/ticker.actions";
 import {LookupItem} from "../watched/lookup-item.model";
 import {FormControl} from "@angular/forms";
 import 'rxjs/add/observable/of';
@@ -20,9 +20,16 @@ export class SearchComponent implements AfterViewInit {
   results$: Observable<LookupItem>;
   @ViewChild('searchInput')
   private input: FormControl;
+  private watchList$: Observable<any>;
 
   constructor(private stocksService: StocksService, private store: Store<any>) {
 
+  }
+
+  ngOnInit() {
+    this.watchList$ = this.store.select((state) => {
+      return state.watchList;
+    });
   }
 
   ngAfterViewInit() {
@@ -35,5 +42,9 @@ export class SearchComponent implements AfterViewInit {
 
   addToWatch(item) {
     this.store.dispatch({type: ADD_TO_WATCH, payload: item});
+  }
+
+  removeFromWatch(item) {
+    this.store.dispatch({type: REMOVE_FROM_WATCH, payload: item});
   }
 }

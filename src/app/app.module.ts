@@ -11,13 +11,14 @@ import {WatchedComponent} from "./watched/watched.component";
 import {StockItemComponent} from "./stock-item/stock-item.component";
 import {StockItemRenderComponent} from "./stock-item/stock-item-render.component";
 import {FormsModule} from "@angular/forms";
+import {SearchResultsComponent} from "./search/search-results.component";
 
 
 @NgModule({
-	declarations: [TickerApp, SearchComponent, WatchedComponent, WatchedCounterComponent, StockItemComponent, StockItemRenderComponent],
-	providers: [StocksService],
-	imports: [BrowserModule, StoreModule.provideStore(tickerReducer), JsonpModule,FormsModule],
-	bootstrap: [TickerApp]
+  declarations: [TickerApp, SearchResultsComponent, SearchComponent, WatchedComponent, WatchedCounterComponent, StockItemComponent, StockItemRenderComponent],
+  providers: [StocksService],
+  imports: [BrowserModule, StoreModule.provideStore(tickerReducer), JsonpModule, FormsModule],
+  bootstrap: [TickerApp]
 })
 export class AppModule {
 }
